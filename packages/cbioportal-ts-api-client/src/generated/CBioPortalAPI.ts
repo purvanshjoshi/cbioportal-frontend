@@ -298,9 +298,19 @@ export type GenericAssayMeta = {
 
 };
 export type GenericAssayMetaFilter = {
-    'genericAssayStableIds': Array < string >
+    'genericAssayStableIds'?: Array < string >
 
-        'molecularProfileIds': Array < string >
+        'molecularProfileIds'?: Array < string >
+
+        'keyword'?: string
+
+        'limit'?: number
+
+        'offset'?: number
+
+        'sortBy'?: string
+
+        'direction'?: "ASC" | "DESC"
 
 };
 export type Info = {

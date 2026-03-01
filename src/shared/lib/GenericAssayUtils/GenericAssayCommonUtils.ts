@@ -71,7 +71,7 @@ export async function fetchGenericAssayMetaByMolecularProfileIdsGroupedByGeneric
             fetchGenericAssayMetaByProfileIds(
                 _.map(
                     genericAssayProfilesGroupedByGenericAssayType[
-                        genericAssayType
+                    genericAssayType
                     ],
                     profile => profile.molecularProfileId
                 )
@@ -144,29 +144,37 @@ export async function fetchGenericAssayMetaGroupedByMolecularProfileIdSuffix(
 }
 
 export function fetchGenericAssayMetaByProfileIds(
-    genericAssayProfileIds: string[]
+    genericAssayProfileIds: string[],
+    keyword?: string,
+    limit?: number,
+    offset?: number
 ) {
     if (genericAssayProfileIds.length > 0) {
         return client.fetchGenericAssayMetaUsingPOST({
             genericAssayMetaFilter: {
                 molecularProfileIds: genericAssayProfileIds,
-                // the Swagger-generated type expected by the client method below
-                // incorrectly requires both molecularProfileIds and genericAssayStableIds;
-                // use 'as' to tell TypeScript that this object really does fit.
+                keyword,
+                limit,
+                offset,
             } as GenericAssayMetaFilter,
         });
     }
     return Promise.resolve([]);
 }
 
-export function fetchGenericAssayMetaByEntityIds(entityIds: string[]) {
+export function fetchGenericAssayMetaByEntityIds(
+    entityIds: string[],
+    keyword?: string,
+    limit?: number,
+    offset?: number
+) {
     if (entityIds.length > 0) {
         return client.fetchGenericAssayMetaUsingPOST({
             genericAssayMetaFilter: {
                 genericAssayStableIds: entityIds,
-                // the Swagger-generated type expected by the client method below
-                // incorrectly requires both molecularProfileIds and genericAssayStableIds;
-                // use 'as' to tell TypeScript that this object really does fit.
+                keyword,
+                limit,
+                offset,
             } as GenericAssayMetaFilter,
         });
     }
@@ -244,9 +252,9 @@ export function makeGenericAssayPlotsTabOption(
         label: label,
         plotAxisLabel: shouldUseCompactLabelForPlotAxis
             ? formatGenericAssayCompactLabelByNameAndId(
-                  meta.stableId,
-                  entityName
-              )
+                meta.stableId,
+                entityName
+            )
             : entityName,
     };
 }
